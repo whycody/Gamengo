@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,8 +19,9 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        _body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, _body.velocity.y);
+        _body.velocity = new Vector2(horizontalInput * speed, _body.velocity.y);
 
+        // turning right and left
         if (horizontalInput > 0.01f)
             transform.localScale = new Vector2(10, 10);
         else if (horizontalInput < -0.01f)
@@ -27,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && _grounded)
             Jump();
+        
+        _body.gravityScale = Input.GetKey(KeyCode.DownArrow) ? 4f : 1.5f;
+            
 
         _anim.SetBool("running", horizontalInput != 0);
     }
