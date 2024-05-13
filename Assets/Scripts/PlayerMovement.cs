@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float jumpspeed;
     private Rigidbody2D body;
     private Animator anim;
     private bool grounded;
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
         else if (horizontalInput < -0.01f)
             transform.localScale = new Vector2(-10, 10);
 
-        if (Input.GetKey(KeyCode.UpArrow) && grounded)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && grounded)
             Jump();
 
         anim.SetBool("running", horizontalInput != 0);
@@ -33,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         anim.SetBool("jumping", true);
-        body.velocity = new Vector2(body.velocity.x, speed);
+        body.velocity = new Vector2(body.velocity.x, jumpspeed);
         grounded = false;
     }
 
