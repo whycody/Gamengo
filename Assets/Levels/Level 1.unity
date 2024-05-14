@@ -135,8 +135,8 @@ GameObject:
   - component: {fileID: 398512696}
   - component: {fileID: 398512695}
   m_Layer: 0
-  m_Name: Ground
-  m_TagString: Untagged
+  m_Name: GroundFlat
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -357,8 +357,8 @@ GameObject:
   - component: {fileID: 1067371951}
   - component: {fileID: 1067371950}
   m_Layer: 0
-  m_Name: Ground (1)
-  m_TagString: Untagged
+  m_Name: GroundStep
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -469,8 +469,8 @@ Transform:
   m_GameObject: {fileID: 1067371949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.16, y: -4.35, z: 0}
-  m_LocalScale: {x: 1.333996, y: 0.584433, z: 0.5}
+  m_LocalPosition: {x: 8.1542, y: -4.1, z: 0}
+  m_LocalScale: {x: 1.349389, y: 0.45030564, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
