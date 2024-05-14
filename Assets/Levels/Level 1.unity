@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  jumpspeed: 0
+  jumpSpeed: 8
 --- !u!114 &1908676047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,8 +662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b00e7f86e0e1d4193b21b0eb68efc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  jumpspeed: 8
+  speed: 6
+  jumpSpeed: 8
 --- !u!95 &1908676048
 Animator:
   serializedVersion: 5

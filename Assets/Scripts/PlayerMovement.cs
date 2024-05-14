@@ -31,9 +31,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         
         _body.gravityScale = Input.GetKey(KeyCode.DownArrow) ? 4f : 1.5f;
-            
 
-        _anim.SetBool("running", horizontalInput != 0);
+        speed = _anim.GetBool("running") ? 8 : 6;
+
+        _anim.SetBool("running", Input.GetKey(KeyCode.LeftShift) && horizontalInput != 0);
+
+        _anim.SetBool("walking", horizontalInput != 0);
     }
 
     private void Jump()
