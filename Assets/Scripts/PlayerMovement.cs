@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 8;
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private float idleAnimChangeTime = 3;
+
+    private List<KeyCode> _jumpKeys = new List<KeyCode> { KeyCode.UpArrow, KeyCode.W, KeyCode.Space };
+    private List<KeyCode> _downKeys = new List<KeyCode> { KeyCode.DownArrow, KeyCode.S };
+
     private Rigidbody2D _body;
     private Animator _anim;
     private bool _grounded;
@@ -48,16 +54,18 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(-10, 10);
 
         // Jumping handling
-        if (Input.GetKeyDown(KeyCode.UpArrow) && _grounded)
+        if (_jumpKeys.Any(key => Input.GetKeyDown(key)) && _grounded)
             Jump();
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) && _anim.GetBool(IdleParam))
+        if (_downKeys.Any(key => Input.GetKeyDown(key)) && _anim.GetBool(IdleParam))
             _anim.SetBool(LayingParam, true);
         
         // Setting gravity force on Down Arrow
-        _body.gravityScale = Input.GetKey(KeyCode.DownArrow) ? 4f : 1.5f;
+        _body.gravityScale = Input.GetKey(KeyCode.DownArrow) ? 4f : 2f;
 
         speed = _anim.GetBool(RunningParam) ? 8 : 6;
+
+        jumpSpeed = _anim.GetBool(RunningParam) ? 9 : 8;
 
         #endregion
 
