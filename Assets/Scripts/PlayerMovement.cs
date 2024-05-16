@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             _anim.SetBool(LayingParam, true);
         
         // Setting gravity force on Down Arrow
-        _body.gravityScale = Input.GetKey(KeyCode.DownArrow) ? 4f : 2f;
+        _body.gravityScale = _downKeys.Any(key => Input.GetKey(key)) ? 4f : 2f;
 
         speed = _anim.GetBool(RunningParam) ? 8 : 6;
 
