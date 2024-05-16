@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 398512697}
   - component: {fileID: 398512696}
   - component: {fileID: 398512695}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundFlat
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 1067371952}
   - component: {fileID: 1067371951}
   - component: {fileID: 1067371950}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundStep
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -780,7 +780,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   jumpSpeed: 8
-  idleAnimChangeTime: 3
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1908676047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,7 +797,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   jumpSpeed: 8
-  idleAnimChangeTime: 3
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!95 &1908676048
 Animator:
   serializedVersion: 5

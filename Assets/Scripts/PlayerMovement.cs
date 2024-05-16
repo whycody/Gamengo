@@ -9,14 +9,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float speed = 8;
     [SerializeField] private float jumpSpeed = 8;
-    [SerializeField] private float idleAnimChangeTime = 3;
+    [SerializeField] private LayerMask _groundLayer;
 
     private List<KeyCode> _jumpKeys = new List<KeyCode> { KeyCode.UpArrow, KeyCode.W, KeyCode.Space };
     private List<KeyCode> _downKeys = new List<KeyCode> { KeyCode.DownArrow, KeyCode.S };
 
     private Rigidbody2D _body;
+    private BoxCollider2D _boxColidier;
     private Animator _anim;
-    private bool _grounded;
 
     #endregion
 
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        _boxColidier = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(-10, 10);
 
         // Jumping handling
-        if (_jumpKeys.Any(key => Input.GetKeyDown(key)) && _grounded)
+        if (_jumpKeys.Any(key => Input.GetKeyDown(key)) && isGrounded())
             Jump();
 
         if (_downKeys.Any(key => Input.GetKeyDown(key)) && _anim.GetBool(IdleParam))
@@ -86,13 +87,17 @@ public class PlayerMovement : MonoBehaviour
         _anim.SetBool(JumpingParam, true);
         _anim.SetTrigger(JumpParam);
         _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
-        _grounded = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Ground")) return;
         _anim.SetBool(JumpingParam, false);
-        _grounded = true;
+    }
+
+    private bool isGrounded()
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(_boxColidier.bounds.center, _boxColidier.bounds.size, 0, Vector2.down, 0.1f, _groundLayer);
+        return raycastHit.collider != null;
     }
 }
