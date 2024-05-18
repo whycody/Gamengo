@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
 
+    private float _defaultGravityScale;
+
     private readonly List<KeyCode> _jumpKeys = new List<KeyCode> { KeyCode.UpArrow, KeyCode.W, KeyCode.Space };
     private readonly List<KeyCode> _downKeys = new List<KeyCode> { KeyCode.DownArrow, KeyCode.S };
 
@@ -39,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         _body = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
+        _defaultGravityScale = _body.gravityScale;
     }
 
     private void Update()
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             _anim.SetBool(LayingParam, true);
 
         // Setting gravity force on Down Arrow
-        _body.gravityScale = _downKeys.Any(Input.GetKey) ? 4f : 2f;
+        _body.gravityScale = _downKeys.Any(Input.GetKey) ? 2 * _defaultGravityScale : _defaultGravityScale;
 
 
         speed = _anim.GetBool(RunningParam) ? 8 : 6;
