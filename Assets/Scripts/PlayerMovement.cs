@@ -81,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
         if(!_anim.GetBool(IdleParam)) _anim.SetBool(LayingParam, false);
         
         #endregion
+        
+        print(IsGrounded());
     }
 
     private void Jump()
