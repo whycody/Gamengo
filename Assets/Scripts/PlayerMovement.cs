@@ -47,20 +47,20 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         var horizontalInput = Input.GetAxis("Horizontal");
-        Movement(horizontalInput);
+        var verticalInput = Input.GetAxis("Vertical");
+        Movement(horizontalInput, verticalInput);
     }
 
-    private void Movement(float dir)
+    private void Movement(float horizontalSpeed, float verticalSpeed)
     {
         #region Movement handling
-
         
-        _body.velocity = new Vector2(dir * speed, _body.velocity.y);
+        _body.velocity = new Vector2(horizontalSpeed * speed, _body.velocity.y);
 
         // turning right and left
-        if (dir > 0.01f)
+        if (horizontalSpeed > 0.01f)
             transform.localScale = new Vector2(10, 10);
-        else if (dir < -0.01f)
+        else if (horizontalSpeed < -0.01f)
             transform.localScale = new Vector2(-10, 10);
 
         // Jumping handling
@@ -73,18 +73,18 @@ public class PlayerMovement : MonoBehaviour
         // Setting gravity force on Down Arrow
         _body.gravityScale = _downKeys.Any(Input.GetKey) ? 2 * _defaultGravityScale : _defaultGravityScale;
 
-
         speed = _anim.GetBool(RunningParam) ? 8 : 6;
 
         jumpSpeed = _anim.GetBool(RunningParam) ? 9 : 8;
 
         #endregion
-        
+
         #region Updating parameters
 
         // Updating Animator parameters
-        _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && dir != 0);
-        _anim.SetBool(WalkingParam, dir != 0);
+        if (verticalSpeed == 0) _anim.SetBool(JumpingParam, !IsGrounded());
+        _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0);
+        _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
             !(_anim.GetBool(RunningParam) || _anim.GetBool(WalkingParam) || _anim.GetBool(JumpingParam)));
         if(!_anim.GetBool(IdleParam)) _anim.SetBool(LayingParam, false);
@@ -97,12 +97,6 @@ public class PlayerMovement : MonoBehaviour
         _anim.SetBool(JumpingParam, true);
         _anim.SetTrigger(JumpParam);
         _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!IsGrounded()) return;
-        _anim.SetBool(JumpingParam, false);
     }
 
     private bool IsGrounded()
