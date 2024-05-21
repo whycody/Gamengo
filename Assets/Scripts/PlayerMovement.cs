@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -82,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         #region Updating parameters
 
         // Updating Animator parameters
-        if (verticalSpeed == 0) _anim.SetBool(JumpingParam, !IsGrounded());
+        if (Math.Abs(_body.velocity.y) < 0.01 && IsGrounded()) _anim.SetBool(JumpingParam, false);
         _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0);
         _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
