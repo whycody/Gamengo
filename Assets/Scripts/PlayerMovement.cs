@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
 
+    public ParticleSystem dust;
     private float _defaultGravityScale;
 
     private readonly List<KeyCode> _jumpKeys = new List<KeyCode> { KeyCode.UpArrow, KeyCode.W, KeyCode.Space };
@@ -35,8 +36,6 @@ public class PlayerMovement : MonoBehaviour
     //private static readonly int GroundedParam = Animator.StringToHash("grounded");
 
     #endregion
-
-
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
@@ -65,8 +64,8 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(-10, 10);
 
         // Jumping handling
-        if (_jumpKeys.Any(Input.GetKeyDown) && IsGrounded())
-            Jump();
+        if (_jumpKeys.Any(Input.GetKeyDown) && IsGrounded()) Jump();
+            
 
         if (_downKeys.Any(Input.GetKeyDown) && _anim.GetBool(IdleParam))
             _anim.SetBool(LayingParam, true);
@@ -83,7 +82,11 @@ public class PlayerMovement : MonoBehaviour
         #region Updating parameters
 
         // Updating Animator parameters
-        if (Math.Abs(_body.velocity.y) < 0.01 && IsGrounded()) _anim.SetBool(JumpingParam, false);
+        if (Math.Abs(_body.velocity.y) < 0.01 && IsGrounded() && _anim.GetBool(JumpingParam))
+        {
+            ShowDust();
+            _anim.SetBool(JumpingParam, false);
+        }
         _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0);
         _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
@@ -95,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        ShowDust();
         _anim.SetBool(JumpingParam, true);
         _anim.SetTrigger(JumpParam);
         _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
@@ -116,5 +120,10 @@ public class PlayerMovement : MonoBehaviour
     public void ResetParent()
     {
         transform.parent = _originalParent;
+    }
+
+    public void ShowDust()
+    {
+        dust.Play();
     }
 }
