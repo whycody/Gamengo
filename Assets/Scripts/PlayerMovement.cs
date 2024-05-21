@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _body;
     private BoxCollider2D _boxCollider;
     private Animator _anim;
+    private Transform _originalParent;
 
     #endregion
 
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     private void Movement(float horizontalSpeed, float verticalSpeed)
     {
         #region Movement handling
-        
+
         _body.velocity = new Vector2(horizontalSpeed * speed, _body.velocity.y);
 
         // turning right and left
@@ -87,11 +87,11 @@ public class PlayerMovement : MonoBehaviour
         _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
             !(_anim.GetBool(RunningParam) || _anim.GetBool(WalkingParam) || _anim.GetBool(JumpingParam)));
-        if(!_anim.GetBool(IdleParam)) _anim.SetBool(LayingParam, false);
-        
+        if (!_anim.GetBool(IdleParam)) _anim.SetBool(LayingParam, false);
+
         #endregion
     }
-    
+
     private void Jump()
     {
         _anim.SetBool(JumpingParam, true);
@@ -101,7 +101,19 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        var raycastHit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0, Vector2.down, 0.1f,
+            groundLayer);
         return raycastHit.collider is not null;
+    }
+
+    public void SetParent(Transform newParent)
+    {
+        _originalParent = transform.parent;
+        transform.parent = newParent;
+    }
+
+    public void ResetParent()
+    {
+        transform.parent = _originalParent;
     }
 }
