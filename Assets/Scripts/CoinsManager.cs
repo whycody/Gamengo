@@ -19,7 +19,7 @@ public class CoinsManager : MonoBehaviour
 
     public void ChangeCoins(int amount)
     {
-        _coins += amount;
+        _coins += amount; 
     }
 
     private void OnGUI()
