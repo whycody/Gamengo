@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Variables
 
+    [SerializeField] private ParticleSystem dust;
     [SerializeField] private float speed = 8;
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
@@ -35,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     //private static readonly int GroundedParam = Animator.StringToHash("grounded");
 
     #endregion
-
 
     private void Awake()
     {
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         #region Updating parameters
 
         // Updating Animator parameters
-        if (Math.Abs(_body.velocity.y) < 0.01 && IsGrounded()) _anim.SetBool(JumpingParam, false);
+        UpdateJumpingParam();
         _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0);
         _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
@@ -93,8 +93,17 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
+    private void UpdateJumpingParam()
+    {
+        if (Math.Abs(_body.velocity.y) < 0.01 && IsGrounded() && _anim.GetBool(JumpingParam)) {
+            dust.Play();
+            _anim.SetBool(JumpingParam, false);
+        }
+    }
+
     private void Jump()
     {
+        dust.Play();
         _anim.SetBool(JumpingParam, true);
         _anim.SetTrigger(JumpParam);
         _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
