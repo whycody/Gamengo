@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 8;
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask deathLayer;
+    [SerializeField] private GameObject gameOverScreen;
 
     private float _defaultGravityScale;
 
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
+        gameOverScreen.active = IsKilled();
         Movement(horizontalInput, verticalInput);
     }
 
@@ -113,6 +116,13 @@ public class PlayerMovement : MonoBehaviour
     {
         var raycastHit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0, Vector2.down, 0.1f,
             groundLayer);
+        return raycastHit.collider is not null;
+    }
+
+    private bool IsKilled()
+    {
+        var raycastHit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0, Vector2.down, 0.1f,
+            deathLayer);
         return raycastHit.collider is not null;
     }
 
