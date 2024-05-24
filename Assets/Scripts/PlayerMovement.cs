@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +15,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private Image staminaBar;
+    [SerializeField] private float stamina = 100, maxStamina = 100;
+    [SerializeField] private float jumpCost = 25, runCost = 25;
+    [SerializeField] private float chargeRate = 25;
+
+    private Coroutine _recharge;
 
     private float _defaultGravityScale;
 
@@ -45,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
         _anim = GetComponent<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _defaultGravityScale = _body.gravityScale;
+        
+        stamina = maxStamina;
+        UpdateStaminaBar();
     }
 
     private void Update()
@@ -68,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(-10, 10);
 
         // Jumping handling
-        if (_jumpKeys.Any(Input.GetKeyDown) && IsGrounded())
+        if (_jumpKeys.Any(Input.GetKeyDown) && IsGrounded() && stamina >= jumpCost)
             Jump();
 
         if (_downKeys.Any(Input.GetKeyDown) && _anim.GetBool(IdleParam))
@@ -79,6 +90,13 @@ public class PlayerMovement : MonoBehaviour
 
         speed = _anim.GetBool(RunningParam) ? 8 : 6;
 
+        if (_anim.GetBool(RunningParam))
+        {
+            UseStamina(runCost);
+            if (_recharge is not null) StopCoroutine(_recharge);
+            _recharge = StartCoroutine(RechargeStamina());
+        }
+
         jumpSpeed = _anim.GetBool(RunningParam) ? 9 : 8;
 
         #endregion
@@ -87,7 +105,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Updating Animator parameters
         UpdateJumpingParam();
-        _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0);
+        
+        _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0 && stamina >= runCost);
         _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
             !(_anim.GetBool(RunningParam) || _anim.GetBool(WalkingParam) || _anim.GetBool(JumpingParam)));
@@ -98,10 +117,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateJumpingParam()
     {
-        if (Math.Abs(_body.velocity.y) < 0.01 && IsGrounded() && _anim.GetBool(JumpingParam)) {
-            dust.Play();
-            _anim.SetBool(JumpingParam, false);
-        }
+        if (!(Math.Abs(_body.velocity.y) < 0.01) || !IsGrounded() || !_anim.GetBool(JumpingParam)) return;
+        dust.Play();
+        _anim.SetBool(JumpingParam, false);
     }
 
     private void Jump()
@@ -110,6 +128,9 @@ public class PlayerMovement : MonoBehaviour
         _anim.SetBool(JumpingParam, true);
         _anim.SetTrigger(JumpParam);
         _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
+        UseStamina(jumpCost);
+        if (_recharge is not null) StopCoroutine(_recharge);
+        _recharge = StartCoroutine(RechargeStamina());
     }
 
     private bool IsGrounded()
@@ -135,5 +156,34 @@ public class PlayerMovement : MonoBehaviour
     public void ResetParent()
     {
         transform.parent = _originalParent;
+    }
+
+    private void UseStamina(float amount)
+    {
+        
+        stamina -= amount;
+        if (stamina < 0) stamina = 0;
+        UpdateStaminaBar();
+    }
+
+    private void UpdateStaminaBar()
+    {
+        if (staminaBar is not null)
+        {
+            staminaBar.fillAmount = stamina / maxStamina;
+        }
+    }
+
+    private IEnumerator RechargeStamina()
+    {
+        yield return new WaitForSeconds(1f);
+
+        while (stamina < maxStamina)
+        {
+            stamina += chargeRate / 10f;
+            if (stamina > maxStamina) stamina = maxStamina;
+            UpdateStaminaBar();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
