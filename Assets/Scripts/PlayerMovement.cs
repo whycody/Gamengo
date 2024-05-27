@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Image staminaBar;
     [SerializeField] private float stamina = 100, maxStamina = 100;
     [SerializeField] private float jumpCost = 25, runCost = 25;
@@ -62,7 +63,12 @@ public class PlayerMovement : MonoBehaviour
     {
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
-        gameOverScreen.active = IsKilled();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
+            pauseScreen.SetActive(true);
+        }
+        gameOverScreen.SetActive(IsKilled());
         if(!IsKilled())
             Movement(horizontalInput, verticalInput);
         else

@@ -1,7 +1,8 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Blinker : MonoBehaviour
+public class PauseBlinker : MonoBehaviour
 {
     public GameObject square;
     public float seconds = 2.5f;
@@ -17,7 +18,7 @@ public class Blinker : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(seconds);
             square.SetActive(true);
-            yield return new WaitForSecondsRealtime(0.15f);
+            yield return new WaitForSecondsRealtime(seconds);
             square.SetActive(false);
         }
     }
