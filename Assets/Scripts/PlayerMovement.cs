@@ -63,7 +63,10 @@ public class PlayerMovement : MonoBehaviour
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
         gameOverScreen.active = IsKilled();
-        Movement(horizontalInput, verticalInput);
+        if(!IsKilled())
+            Movement(horizontalInput, verticalInput);
+        else
+            _body.velocity = Vector3.zero;
     }
 
     private void Movement(float horizontalSpeed, float verticalSpeed)
