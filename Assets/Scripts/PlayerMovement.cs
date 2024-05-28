@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float stamina = 100, maxStamina = 100;
     [SerializeField] private float jumpCost = 25, runCost = 25;
     [SerializeField] private float chargeRate = 25;
+    [SerializeField] private AudioSource backgroundMusic;
 
     private Coroutine _recharge;
 
@@ -64,15 +65,25 @@ public class PlayerMovement : MonoBehaviour
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0f;
-            pauseScreen.SetActive(true);
-        }
-        gameOverScreen.SetActive(IsKilled());
+            ShowPauseMenu();
+        if (!gameOverScreen.activeSelf && IsKilled())
+            HandleDeath();   
         if(!IsKilled())
             Movement(horizontalInput, verticalInput);
         else
             _body.velocity = Vector3.zero;
+    }
+
+    private void ShowPauseMenu()
+    {
+        Time.timeScale = 0f;
+        pauseScreen.SetActive(true);
+    }
+
+    private void HandleDeath()
+    {
+        gameOverScreen.SetActive(IsKilled());
+        backgroundMusic.volume = backgroundMusic.volume * 0.2f;
     }
 
     private void Movement(float horizontalSpeed, float verticalSpeed)
@@ -106,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             _recharge = StartCoroutine(RechargeStamina());
         }
 
-        jumpSpeed = _anim.GetBool(RunningParam) ? 9 : 8;
+        jumpSpeed = _anim.GetBool(RunningParam) ? 9.5f : 8;
 
         #endregion
 
