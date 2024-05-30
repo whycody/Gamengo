@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Image staminaBar;
-    [SerializeField] private float stamina = 100, maxStamina = 100;
+    [SerializeField] private float stamina = 300, maxStamina = 300;
     [SerializeField] private float jumpCost = 25, runCost = 25;
     [SerializeField] private float chargeRate = 25;
     [SerializeField] private AudioSource backgroundMusic;
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             ShowPauseMenu();
         if (!gameOverScreen.activeSelf && IsKilled())
             HandleDeath();   
-        if(!IsKilled())
+        if(!gameOverScreen.activeSelf)
             Movement(horizontalInput, verticalInput);
         else
             _body.velocity = Vector3.zero;
