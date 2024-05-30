@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Image staminaBar;
-    [SerializeField] private float stamina = 300, maxStamina = 300;
+    [SerializeField] private float stamina = 500, maxStamina = 500;
     [SerializeField] private float jumpCost = 25, runCost = 25;
-    [SerializeField] private float chargeRate = 25;
+    [SerializeField] private float chargeRate = 20;
     [SerializeField] private AudioSource backgroundMusic;
 
     private Coroutine _recharge;
@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
+        chargeRate = _anim.GetBool(LayingParam) ? 40f : 20f;
         if (Input.GetKeyDown(KeyCode.Escape))
             ShowPauseMenu();
         if (!gameOverScreen.activeSelf && IsKilled())
@@ -200,10 +201,10 @@ public class PlayerMovement : MonoBehaviour
 
         while (stamina < maxStamina)
         {
-            stamina += chargeRate / 10f;
+            stamina += chargeRate / 100f;
             if (stamina > maxStamina) stamina = maxStamina;
             UpdateStaminaBar();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 }
