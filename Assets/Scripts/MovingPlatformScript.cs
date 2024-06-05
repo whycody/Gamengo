@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MovingPlatformScript : MonoBehaviour
@@ -36,7 +35,7 @@ public class MovingPlatformScript : MonoBehaviour
 
         return waypoints[_currentWaypointIndex];
     }
-
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         var player = other.collider.GetComponent<PlayerMovement>();
