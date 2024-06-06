@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _body;
     private BoxCollider2D _boxCollider;
     private Animator _anim;
-    private Transform _originalParent;
+    private Transform _originalParent = null;
 
     #endregion
 
@@ -74,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         else
             _body.velocity = Vector3.zero;
     }
-
+    
     private void ShowPauseMenu()
     {
         Time.timeScale = 0f;
@@ -84,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleDeath()
     {
         gameOverScreen.SetActive(IsKilled());
+        ResetParent();       
         backgroundMusic.volume = backgroundMusic.volume * 0.2f;
     }
 
@@ -138,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateJumpingParam()
     {
-        if (!(Math.Abs(_body.velocity.y) < 0.01) || !IsGrounded() || !_anim.GetBool(JumpingParam)) return;
+        if (!(Math.Abs(_body.velocity.y) < 0.2) || !IsGrounded() || !_anim.GetBool(JumpingParam)) return;
         dust.Play();
         _anim.SetBool(JumpingParam, false);
     }
@@ -156,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        var raycastHit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0, Vector2.down, 0.1f,
+        var raycastHit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0, Vector2.down, 0.5f,
             groundLayer);
         return raycastHit.collider is not null;
     }

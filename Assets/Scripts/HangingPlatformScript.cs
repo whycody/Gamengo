@@ -3,15 +3,38 @@ using UnityEngine;
 
 public class HangingPlatformsScript : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D other)
+    private Vector3 _lastPosition;
+
+    public void Start()
     {
-        var player = other.collider.GetComponent<PlayerMovement>();
-        player?.SetParent(transform);
+        _lastPosition = transform.position;
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    private void Update()
     {
-        var player = other.collider.GetComponent<PlayerMovement>();
+        var deltaPosition = transform.position - _lastPosition;
+        _lastPosition = transform.position;
+        
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("Player"))
+            {
+                child.position += deltaPosition;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var player = other.GetComponent<PlayerMovement>();
+        player?.SetParent(transform);
+    }
+    
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        var player = other.GetComponent<PlayerMovement>();
         player?.ResetParent();
     }
 }
+
