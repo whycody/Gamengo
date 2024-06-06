@@ -103,7 +103,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -148,7 +148,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 185607138375200741}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -277,7 +277,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -322,7 +322,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 419981654322016210}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 6416685929628059440}
   - component: {fileID: 2087669067329151150}
   - component: {fileID: 1344301258884299900}
+  - component: {fileID: 2112498615636629532}
   m_Layer: 6
   m_Name: Plank4
   m_TagString: Untagged
@@ -451,7 +452,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -496,7 +497,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 707420607862513227}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -522,6 +523,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.5000306, y: 0.20240729}
   m_Size: {x: 1.0000001, y: 0.22018814}
   m_Direction: 1
+--- !u!114 &2112498615636629532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707420607862513227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3899df043507f14b90876861ad29331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &737728674395846262
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +638,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -670,7 +683,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 737728674395846262}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -799,7 +812,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -844,7 +857,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 816213767634193628}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -973,7 +986,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1018,7 +1031,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 3658859880279811435}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1147,7 +1160,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1192,7 +1205,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 6902108229711975600}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1389,7 +1402,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 3296a5cd99a01374facf539b9c6a02bd, type: 2}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1434,7 +1447,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 8387362954871077752}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 19e389300241f0f41bf690a52f0cbbae, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

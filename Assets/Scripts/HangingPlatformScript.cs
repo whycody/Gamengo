@@ -34,7 +34,7 @@ public class HangingPlatformsScript : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         var player = other.GetComponent<PlayerMovement>();
-        player?.ResetParent();
+        player?.SetParent(null);
     }
 }
 
