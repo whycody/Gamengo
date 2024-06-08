@@ -324,6 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224205694}
+  - component: {fileID: 224205698}
   - component: {fileID: 224205693}
   - component: {fileID: 224205695}
   - component: {fileID: 224205696}
@@ -402,6 +403,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 1042499748}
+--- !u!114 &224205698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224205692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ea76a509eb6d54da1ee9490b6de053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &288803024
 GameObject:
   m_ObjectHideFlags: 0
@@ -3743,8 +3756,8 @@ Transform:
   m_GameObject: {fileID: 944907453}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.009786929, z: -0, w: 0.99995214}
-  m_LocalPosition: {x: 48.5177, y: -12.7726, z: -0.7408}
-  m_LocalScale: {x: 155.7971, y: 1.1748999, z: 1}
+  m_LocalPosition: {x: 250.8466, y: -14.0438, z: -4.7017}
+  m_LocalScale: {x: 560.5268, y: -1.3674661, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

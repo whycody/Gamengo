@@ -9,7 +9,7 @@ public class CoinsManager : MonoBehaviour
     private int _totalCoinsOnLevel;
     [SerializeField] private TMP_Text coinsDisplay;
 
-    private int _currentLevel = 1;
+    private int _currentLevel;
 
     private void Awake()
     {
@@ -22,6 +22,13 @@ public class CoinsManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        UpdateTotalCoinsOnLevel();
+        UpdateCoinsDisplay();
+    }
+    
+    private void Start()
+    {
+        _currentLevel = GameManager.Instance.CurrentLevel;
         UpdateTotalCoinsOnLevel();
         UpdateCoinsDisplay();
     }
