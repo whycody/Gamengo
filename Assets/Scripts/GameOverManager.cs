@@ -7,8 +7,7 @@ public class GameOverManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    // Metoda do powrotu do poprzedniej sceny
+    
     public void Quit()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + -1);

@@ -8,7 +8,8 @@ public class TeleportToNextLvl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var player = other.GetComponent<PlayerMovement>();
-        if (player is not null)
-            player.transform.position = _lvlsPos[destinationLevel - 1];
+        if (player is null) return;
+        player.transform.position = _lvlsPos[destinationLevel - 1];
+        CoinsManager.Instance.SetLevel(destinationLevel);
     }
 }
