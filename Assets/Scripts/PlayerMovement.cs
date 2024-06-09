@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class PlayerMovement : MonoBehaviour
@@ -56,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
         _anim = GetComponent<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _defaultGravityScale = _body.gravityScale;
-        
         stamina = maxStamina;
         UpdateStaminaBar();
     }
@@ -85,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleDeath()
     {
         gameOverScreen.SetActive(IsKilled());
-        ResetParent();       
+        ResetParent();
         backgroundMusic.volume = backgroundMusic.volume * 0.2f;
     }
 

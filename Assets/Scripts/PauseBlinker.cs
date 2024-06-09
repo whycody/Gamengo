@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PauseBlinker : MonoBehaviour
@@ -7,12 +6,12 @@ public class PauseBlinker : MonoBehaviour
     public GameObject square;
     public float seconds = 2.5f;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(BlinkSquare());
     }
 
-    IEnumerator BlinkSquare()
+    private IEnumerator BlinkSquare()
     {
         while (true)
         {
