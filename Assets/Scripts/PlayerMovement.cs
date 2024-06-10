@@ -8,9 +8,7 @@ using Image = UnityEngine.UI.Image;
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
-
-    public static PlayerMovement Instance;
-
+    
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private float speed = 8;
     [SerializeField] private float jumpSpeed = 8;
@@ -34,9 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _body;
     private BoxCollider2D _boxCollider;
     private Animator _anim;
-    private Transform _originalParent = null;
-
-    private GameManager _gameManager;
+    private Transform _originalParent;
 
     #endregion
 
@@ -55,17 +51,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance) Instance = this;
-        else Destroy(gameObject);
-
         _body = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _defaultGravityScale = _body.gravityScale;
         stamina = maxStamina;
         UpdateStaminaBar();
-
-        _gameManager = GameManager.Instance;
+        gameObject.tag = "Player";
     }
 
     private void Update()
@@ -81,8 +73,6 @@ public class PlayerMovement : MonoBehaviour
             Movement(horizontalInput, verticalInput);
         else
             _body.velocity = Vector3.zero;
-
-        if (_gameManager.GetHp() == 0) HandleDeath();
     }
 
     private void ShowPauseMenu()
@@ -93,9 +83,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDeath()
     {
-        print("ZABIJAM");
+        // print("ZABIJAM");
         gameOverScreen.SetActive(IsKilled());
         ResetParent();
+        gameObject.tag = "Untagged";
         backgroundMusic.volume = backgroundMusic.volume * 0.2f;
     }
 

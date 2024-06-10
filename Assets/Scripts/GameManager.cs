@@ -33,17 +33,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-        _healthManager = HealthManager.Instance;
-    }
-
-    public void AddHp(int value)
-    {
-        _healthManager.Health += value;
-    }
-    
-    public int GetHp()
-    {
-        return _healthManager.Health;
+        } 
     }
 }
