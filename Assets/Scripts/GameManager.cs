@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource winMusic;
+    [SerializeField] private AudioSource loseSound;
+    [SerializeField] private AudioSource resumeSound;
 
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameOverScreen;
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentLevel = value;
+            resumeSound.Play();
             PlayerPrefs.SetInt("ChosenLevel", value);
             if (CoinsManager.Instance is not null)
                 CoinsManager.Instance.SetLevel(value);
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
     public void HandleDeath()
     {
         IsPaused = true;
+        loseSound.Play();
         gameOverScreen.SetActive(true);
         backgroundMusic.volume *= 0.2f;
     }

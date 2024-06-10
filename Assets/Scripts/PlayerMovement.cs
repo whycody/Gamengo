@@ -80,6 +80,14 @@ public class PlayerMovement : MonoBehaviour
         gameManager.HandleDeath();
         ResetParent();
         gameObject.tag = "Untagged";
+        ResetParams();
+    }
+
+    private void ResetParams()
+    {
+        _anim.SetBool(WalkingParam, false);
+        _anim.SetBool(RunningParam, false);
+        _anim.SetBool(JumpingParam, false);
     }
 
     private void Movement(float horizontalSpeed, float verticalSpeed)
