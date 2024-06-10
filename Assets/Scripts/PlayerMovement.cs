@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Image = UnityEngine.UI.Image;
+using System.Net;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
+    [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] private GameObject gameManagerObject;
 
@@ -83,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         ResetParams();
     }
 
-    private void ResetParams()
+    public void ResetParams()
     {
         _anim.SetBool(WalkingParam, false);
         _anim.SetBool(RunningParam, false);

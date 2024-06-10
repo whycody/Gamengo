@@ -7,9 +7,13 @@ public class Projectile : MonoBehaviour
     private Transform _player;
     private Vector2 _direction;
     private bool _horizontal;
+    private GameObject gameManagerObject;
+    private GameManager gameManager;
 
     public void Awake()
     {
+        gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
+        gameManager = gameManagerObject.GetComponent<GameManager>();
         if (!GameObject.FindGameObjectWithTag("Player")) return;
         _player = GameObject.FindGameObjectWithTag("Player").transform.Find("ProjectileTarget");
         Destroy(gameObject, lifeTime);
@@ -27,8 +31,10 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Zniszczenie pocisku po kolizji
-        // Tutaj możesz dodać dodatkową logikę, np. zadającą obrażenia graczowi
-        Destroy(gameObject);
+        if (collision.CompareTag("Player"))
+        {
+            gameManager.HandleAttack();
+            Destroy(gameObject);
+        }
     }
 }

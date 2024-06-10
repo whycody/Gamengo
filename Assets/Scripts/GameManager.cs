@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompleteScreen;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject healthContainer;
 
     private readonly Vector3[] _lvlsPos = { new(97f, -2.78f, 4.55f), new(285, -4, 0), new(320, -4, 0) };
 
@@ -68,10 +65,16 @@ public class GameManager : MonoBehaviour
 
     public void HandleDeath()
     {
+        player.GetComponent<PlayerMovement>().ResetParams();
         IsPaused = true;
         loseSound.Play();
         gameOverScreen.SetActive(true);
         backgroundMusic.volume *= 0.2f;
+    }
+
+    public void HandleAttack()
+    {
+        _healthManager.Health--;
     }
 
     private void PauseGame()
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        _healthManager = healthContainer.GetComponent<HealthManager>();
         CurrentLevel = PlayerPrefs.GetInt("ChosenLevel");
         if (Instance == null)
         {

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class HealthManager : MonoBehaviour
 {
     [SerializeField] public int maxHp;
+    [SerializeField] GameObject gameManagerObject;
+    private GameManager gameManager;
     public int currHp;
-
-    public event Action OnPlayerDeath;
 
     public int Health
     {
@@ -16,12 +16,9 @@ public class HealthManager : MonoBehaviour
         set
         {
             if (currHp == value) return;
+            print(value);
             currHp = value;
-            if (currHp > 0 && value == 0)
-            {
-                currHp = 0;
-                OnPlayerDeath?.Invoke();
-            }
+            if (value == 0) gameManager.HandleDeath();
             UpdateHp();
         }
     }
@@ -35,6 +32,7 @@ public class HealthManager : MonoBehaviour
 
     private void Awake()
     {
+        gameManager = gameManagerObject.GetComponent<GameManager>();
         currHp = maxHp;
         InstantiateHearts();
     }
