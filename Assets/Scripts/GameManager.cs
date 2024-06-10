@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject levelCompleteScreen;
     [SerializeField] private GameObject player;
 
-    private readonly Vector3[] _lvlsPos = { new(0f, 0f, 0f), new(285, -4, 0) };
+    private readonly Vector3[] _lvlsPos = { new(97f, -2.78f, 4.55f), new(285, -4, 0), new(320, -4, 0) };
 
     public bool IsStarted { get; set; } = false;
     public bool IsPaused { get; set; } = false;
@@ -26,10 +28,11 @@ public class GameManager : MonoBehaviour
         get => _currentLevel;
         set
         {
-            if (_currentLevel == value) return;
             _currentLevel = value;
+            PlayerPrefs.SetInt("ChosenLevel", value);
             if (CoinsManager.Instance is not null)
                 CoinsManager.Instance.SetLevel(value);
+            player.transform.position = _lvlsPos[value];
         }
     }
 
@@ -55,10 +58,8 @@ public class GameManager : MonoBehaviour
     public void StartNextLevel()
     {
         IsPaused = false;
-        _currentLevel++;
+        CurrentLevel++;
         backgroundMusic.volume *= 10f;
-        player.transform.position = _lvlsPos[_currentLevel - 1];
-        CoinsManager.Instance.SetLevel(_currentLevel - 1);
         levelCompleteScreen.SetActive(false);
     }
 
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        CurrentLevel = PlayerPrefs.GetInt("ChosenLevel");
         if (Instance == null)
         {
             Instance = this;
