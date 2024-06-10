@@ -14,15 +14,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
-    [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private GameObject pauseScreen;
+
+    [SerializeField] private GameObject gameManagerObject;
+
     [SerializeField] private Image staminaBar;
     [SerializeField] private float stamina = 500, maxStamina = 500;
     [SerializeField] private float jumpCost = 25, runCost = 25;
     [SerializeField] private float chargeRate = 20;
-    [SerializeField] private AudioSource backgroundMusic;
 
     private Coroutine _recharge;
+    private GameManager gameManager;
 
     private float _defaultGravityScale;
 
@@ -58,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         stamina = maxStamina;
         UpdateStaminaBar();
         gameObject.tag = "Player";
+        gameManager = gameManagerObject.GetComponent<GameManager>();
     }
 
     private void Update()
@@ -65,29 +67,19 @@ public class PlayerMovement : MonoBehaviour
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
         chargeRate = _anim.GetBool(LayingParam) ? 40f : 20f;
-        if (Input.GetKeyDown(KeyCode.Escape))
-            ShowPauseMenu();
-        if (!gameOverScreen.activeSelf && IsKilled())
+        if (!gameManager.IsPaused && IsKilled())
             HandleDeath();
-        if (!gameOverScreen.activeSelf)
+        if (!gameManager.IsPaused)
             Movement(horizontalInput, verticalInput);
         else
             _body.velocity = Vector3.zero;
     }
 
-    private void ShowPauseMenu()
-    {
-        Time.timeScale = 0f;
-        pauseScreen.SetActive(true);
-    }
-
     private void HandleDeath()
     {
-        // print("ZABIJAM");
-        gameOverScreen.SetActive(IsKilled());
+        gameManager.HandleDeath();
         ResetParent();
         gameObject.tag = "Untagged";
-        backgroundMusic.volume = backgroundMusic.volume * 0.2f;
     }
 
     private void Movement(float horizontalSpeed, float verticalSpeed)

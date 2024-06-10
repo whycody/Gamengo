@@ -7,7 +7,8 @@ public class CoinsManager : MonoBehaviour
 
     private int _coins;
     private int _totalCoinsOnLevel;
-    [SerializeField] private TMP_Text coinsDisplay;
+    [SerializeField] private TMP_Text gameCoinsDisplay;
+    [SerializeField] private TMP_Text menuCoinsDisplay;
 
     private int _currentLevel;
 
@@ -55,7 +56,9 @@ public class CoinsManager : MonoBehaviour
 
     private void UpdateCoinsDisplay()
     {
-        coinsDisplay.text = $"{_coins}/{_totalCoinsOnLevel}";
+        var numberOfCoins = $"{_coins}/{_totalCoinsOnLevel}";
+        gameCoinsDisplay.text = numberOfCoins;
+        menuCoinsDisplay.text = numberOfCoins;
     }
 
     private void OnGUI()
