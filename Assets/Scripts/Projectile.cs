@@ -29,6 +29,8 @@ public class Projectile : MonoBehaviour
     {
         // Zniszczenie pocisku po kolizji
         // Tutaj możesz dodać dodatkową logikę, np. zadającą obrażenia graczowi
+        HealthManager.Instance.Health -= 1;
+        print(HealthManager.Instance.Health);
         Destroy(gameObject);
     }
 }

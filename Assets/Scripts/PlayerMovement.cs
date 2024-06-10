@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Variables
 
+    public static PlayerMovement Instance;
+
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private float speed = 8;
     [SerializeField] private float jumpSpeed = 8;
@@ -34,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator _anim;
     private Transform _originalParent = null;
 
+    private GameManager _gameManager;
+
     #endregion
 
     #region Parameters
@@ -51,12 +55,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        if (!Instance) Instance = this;
+        else Destroy(gameObject);
+
         _body = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _defaultGravityScale = _body.gravityScale;
         stamina = maxStamina;
         UpdateStaminaBar();
+
+        _gameManager = GameManager.Instance;
     }
 
     private void Update()
@@ -67,13 +76,15 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             ShowPauseMenu();
         if (!gameOverScreen.activeSelf && IsKilled())
-            HandleDeath();   
-        if(!gameOverScreen.activeSelf)
+            HandleDeath();
+        if (!gameOverScreen.activeSelf)
             Movement(horizontalInput, verticalInput);
         else
             _body.velocity = Vector3.zero;
+
+        if (_gameManager.GetHp() == 0) HandleDeath();
     }
-    
+
     private void ShowPauseMenu()
     {
         Time.timeScale = 0f;
@@ -82,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDeath()
     {
+        print("ZABIJAM");
         gameOverScreen.SetActive(IsKilled());
         ResetParent();
         backgroundMusic.volume = backgroundMusic.volume * 0.2f;
@@ -126,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Updating Animator parameters
         UpdateJumpingParam();
-        
+
         _anim.SetBool(RunningParam, Input.GetKey(KeyCode.LeftShift) && horizontalSpeed != 0 && stamina >= runCost);
         _anim.SetBool(WalkingParam, horizontalSpeed != 0);
         _anim.SetBool(IdleParam,
@@ -181,7 +193,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void UseStamina(float amount)
     {
-        
         stamina -= amount;
         if (stamina < 0) stamina = 0;
         UpdateStaminaBar();
