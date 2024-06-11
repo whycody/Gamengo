@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    void Start()
+    private void Start()
     {
         UpdateVolume();
     }

@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private AudioSource meowSound;
 
     [SerializeField] private GameObject gameManagerObject;
 
@@ -25,12 +26,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float chargeRate = 20;
 
     private Coroutine _recharge;
-    private GameManager gameManager;
+    private GameManager _gameManager;
 
     private float _defaultGravityScale;
 
     private readonly List<KeyCode> _jumpKeys = new List<KeyCode> { KeyCode.UpArrow, KeyCode.W, KeyCode.Space };
     private readonly List<KeyCode> _downKeys = new List<KeyCode> { KeyCode.DownArrow, KeyCode.S };
+    private readonly List<KeyCode> _interactionKeys = new List<KeyCode> { KeyCode.E };
 
     private Rigidbody2D _body;
     private BoxCollider2D _boxCollider;
@@ -48,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int JumpParam = Animator.StringToHash("jump");
     private static readonly int IdleParam = Animator.StringToHash("idle");
     private static readonly int LayingParam = Animator.StringToHash("laying");
+
+    private static readonly int Meow = Animator.StringToHash("meow");
     //private static readonly int GroundedParam = Animator.StringToHash("grounded");
 
     #endregion
@@ -61,7 +65,12 @@ public class PlayerMovement : MonoBehaviour
         stamina = maxStamina;
         UpdateStaminaBar();
         gameObject.tag = "Player";
-        gameManager = gameManagerObject.GetComponent<GameManager>();
+        _gameManager = gameManagerObject.GetComponent<GameManager>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(MeowRoutine());
     }
 
     private void Update()
@@ -69,9 +78,9 @@ public class PlayerMovement : MonoBehaviour
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
         chargeRate = _anim.GetBool(LayingParam) ? 40f : 20f;
-        if (!gameManager.IsPaused && IsKilled())
+        if (!_gameManager.IsPaused && IsKilled())
             HandleDeath();
-        if (!gameManager.IsPaused)
+        if (!_gameManager.IsPaused)
             Movement(horizontalInput, verticalInput);
         else
             _body.velocity = Vector3.zero;
@@ -79,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDeath()
     {
-        gameManager.HandleDeath();
+        _gameManager.HandleDeath();
         ResetParent();
         gameObject.tag = "Untagged";
         ResetParams();
@@ -110,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_downKeys.Any(Input.GetKeyDown) && _anim.GetBool(IdleParam))
             _anim.SetBool(LayingParam, true);
-
+                
         // Setting gravity force on Down Arrow
         _body.gravityScale = _downKeys.Any(Input.GetKey) ? 2 * _defaultGravityScale : _defaultGravityScale;
 
@@ -210,5 +219,19 @@ public class PlayerMovement : MonoBehaviour
             UpdateStaminaBar();
             yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    private IEnumerator MeowRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(8.0f);
+            _anim.SetTrigger(Meow);
+        }
+    }
+
+    private void PlayMeow()
+    {
+        meowSound?.Play();
     }
 }
