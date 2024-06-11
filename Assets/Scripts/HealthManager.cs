@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ public class HealthManager : MonoBehaviour
 {
     [SerializeField] public int maxHp;
     [SerializeField] GameObject gameManagerObject;
-    private GameManager gameManager;
+    private GameManager _gameManager;
     public int currHp;
 
     public int Health
@@ -18,7 +17,7 @@ public class HealthManager : MonoBehaviour
             if (currHp == value) return;
             print(value);
             currHp = value;
-            if (value == 0) gameManager.HandleDeath();
+            if (value == 0) _gameManager.HandleDeath();
             UpdateHp();
         }
     }
@@ -32,7 +31,7 @@ public class HealthManager : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = gameManagerObject.GetComponent<GameManager>();
+        _gameManager = gameManagerObject.GetComponent<GameManager>();
         currHp = maxHp;
         InstantiateHearts();
     }
@@ -40,9 +39,7 @@ public class HealthManager : MonoBehaviour
     private void InstantiateHearts()
     {
         foreach (Transform child in heartsContainer)
-        {
             Destroy(child.gameObject);
-        }
 
         _hearts.Clear();
         

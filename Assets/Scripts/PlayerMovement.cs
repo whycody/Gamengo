@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Image = UnityEngine.UI.Image;
-using System.Net;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
 
     private readonly List<KeyCode> _jumpKeys = new List<KeyCode> { KeyCode.UpArrow, KeyCode.W, KeyCode.Space };
     private readonly List<KeyCode> _downKeys = new List<KeyCode> { KeyCode.DownArrow, KeyCode.S };
-    private readonly List<KeyCode> _interactionKeys = new List<KeyCode> { KeyCode.E };
 
     private Rigidbody2D _body;
     private BoxCollider2D _boxCollider;
@@ -76,12 +74,11 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         var horizontalInput = Input.GetAxis("Horizontal");
-        var verticalInput = Input.GetAxis("Vertical");
         chargeRate = _anim.GetBool(LayingParam) ? 40f : 20f;
         if (!_gameManager.IsPaused && IsKilled())
             HandleDeath();
         if (!_gameManager.IsPaused)
-            Movement(horizontalInput, verticalInput);
+            Movement(horizontalInput);
         else
             _body.velocity = Vector3.zero;
     }
@@ -101,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         _anim.SetBool(JumpingParam, false);
     }
 
-    private void Movement(float horizontalSpeed, float verticalSpeed)
+    private void Movement(float horizontalSpeed)
     {
         #region Movement handling
 
@@ -202,10 +199,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateStaminaBar()
     {
-        if (staminaBar is not null)
-        {
+        if (staminaBar)
             staminaBar.fillAmount = stamina / maxStamina;
-        }
+        
     }
 
     private IEnumerator RechargeStamina()

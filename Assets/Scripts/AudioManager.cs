@@ -5,19 +5,13 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    private List<AudioSource> audioSources = new List<AudioSource>();
-    public static float volume = 0.5f;
+    private List<AudioSource> _audioSources = new List<AudioSource>();
+    public static float Volume = 0.5f;
 
-    void Awake()
+    private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (!Instance) Instance = this;
+        else Destroy(gameObject);
     }
 
 
@@ -28,28 +22,26 @@ public class AudioManager : MonoBehaviour
 
     public void RegisterAudioSource(AudioSource source)
     {
-        audioSources.Add(source);
-        source.volume = volume;
+        _audioSources.Add(source);
+        source.volume = Volume;
     }
 
     public void SetVolume(float newVolume)
     {
-        volume = newVolume;
-        PlayerPrefs.SetFloat("volume", volume);
+        Volume = newVolume;
+        PlayerPrefs.SetFloat("volume", Volume);
         PlayerPrefs.Save();
         UpdateVolume();
     }
 
     private void UpdateVolume()
     {
-        foreach (var source in audioSources)
-        {
-            source.volume = volume;
-        }
+        foreach (var source in _audioSources)
+            source.volume = Volume;
     }
 
     public float GetVolume()
     {
-        return volume;
+        return Volume;
     }
 }

@@ -14,15 +14,9 @@ public class CoinsManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+        if (!Instance) Instance = this;
+        else Destroy(gameObject);
+        
         UpdateTotalCoinsOnLevel();
         UpdateCoinsDisplay();
     }

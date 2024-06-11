@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private float speed = 8f;
+    private const float Speed = 8f;
     public float lifeTime = 4f;
     private Transform _player;
     private Vector2 _direction;
-    private GameObject gameManagerObject;
-    private GameManager gameManager;
-    private AudioSource attackSound;
+    private GameObject _gameManagerObject;
+    private GameManager _gameManager;
+    private AudioSource _attackSound;
 
     public void Awake()
     {
-        attackSound = GameObject.FindGameObjectWithTag("AttackSound").GetComponent<AudioSource>();
-        attackSound.Play();
-        gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
-        gameManager = gameManagerObject.GetComponent<GameManager>();
+        _attackSound = GameObject.FindGameObjectWithTag("AttackSound").GetComponent<AudioSource>();
+        _attackSound.Play();
+        _gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
+        _gameManager = _gameManagerObject.GetComponent<GameManager>();
         if (!GameObject.FindGameObjectWithTag("Player")) return;
         _player = GameObject.FindGameObjectWithTag("Player").transform.Find("ProjectileTarget");
         _direction = (_player.position - transform.position).normalized;
@@ -24,15 +24,13 @@ public class Projectile : MonoBehaviour
 
     public void Update()
     {
-        transform.Translate(_direction * (speed * Time.deltaTime));
+        transform.Translate(_direction * (Speed * Time.deltaTime));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            gameManager.HandleAttack();
-            Destroy(gameObject);
-        }
+        if (!collision.CompareTag("Player")) return;
+        _gameManager.HandleAttack();
+        Destroy(gameObject);
     }
 }

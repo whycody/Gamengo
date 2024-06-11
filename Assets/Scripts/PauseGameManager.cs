@@ -3,10 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseGameManager : MonoBehaviour
 {
-    public GameObject header;
     public GameObject pauseScreen;
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             ResumeGame();

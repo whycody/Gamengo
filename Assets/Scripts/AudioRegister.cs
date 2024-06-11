@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class AudioRegister : MonoBehaviour
 {
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
 
-    void Start()
+    private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        AudioManager.Instance.RegisterAudioSource(audioSource);
+        _audioSource = GetComponent<AudioSource>();
+        AudioManager.Instance.RegisterAudioSource(_audioSource);
     }
 }

@@ -9,20 +9,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource loseSound;
     [SerializeField] private AudioSource resumeSound;
     [SerializeField] private AudioSource hurtSound;
-
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompleteScreen;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject healthContainer;
-
     [SerializeField] private AudioClip[] levelsClips;
-//285 -4 0
-    private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(465f, -0.34f, 0) };
 
-    public bool IsStarted { get; set; } = false;
-    public bool IsPaused { get; set; } = false;
-    public bool IsInputDisabled { get; set; } = false;
+    private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(520f, -4.3f, 0) };
+
+    public bool IsPaused { get; set; }
     private int _currentLevel = 1;
 
     private HealthManager _healthManager;
@@ -38,11 +34,11 @@ public class GameManager : MonoBehaviour
             if (CoinsManager.Instance is not null)
                 CoinsManager.Instance.SetLevel(value);
             player.transform.position = _lvlsPos[value];
-            StartCoroutine(changeCurrentLevelMusic(value));
+            StartCoroutine(ChangeCurrentLevelMusic(value));
         }
     }
 
-    private IEnumerator changeCurrentLevelMusic(int level)
+    private IEnumerator ChangeCurrentLevelMusic(int level)
     {
         yield return new WaitForSeconds(0.75f);
         backgroundMusic.clip = levelsClips[level];
@@ -51,13 +47,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameOverScreen.activeSelf || levelCompleteScreen.activeSelf) return;
-            if (IsPaused) ResumeGame();
-            else PauseGame();
-        }
-            
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+        if (gameOverScreen.activeSelf || levelCompleteScreen.activeSelf) return;
+        if (IsPaused) ResumeGame();
+        else PauseGame();
+
     }
 
     public void HandleFinishingLevel()
@@ -112,13 +106,8 @@ public class GameManager : MonoBehaviour
         _playerMovement = player.GetComponent<PlayerMovement>();
         _healthManager = healthContainer.GetComponent<HealthManager>();
         CurrentLevel = PlayerPrefs.GetInt("ChosenLevel");
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        } 
+        
+        if (!Instance) Instance = this;
+        else Destroy(gameObject);
     }
 }

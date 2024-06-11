@@ -16,12 +16,9 @@ public class HangingPlatformsScript : MonoBehaviour
         _lastPosition = transform.position;
         
         foreach (Transform child in transform)
-        {
             if (child.CompareTag("Player"))
-            {
                 child.position += deltaPosition;
-            }
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     {
         PlaySound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        PlayerPrefs.SetFloat("volume", AudioManager.volume);
+        PlayerPrefs.SetFloat("volume", AudioManager.Volume);
         PlayerPrefs.SetInt("ChosenLevel", level);
     }
 

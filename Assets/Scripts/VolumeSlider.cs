@@ -5,13 +5,13 @@ public class VolumeSlider : MonoBehaviour
 {
     public Slider volumeSlider;
 
-    void Start()
+    private void Start()
     {
         volumeSlider.value = AudioManager.Instance.GetVolume();
         volumeSlider.onValueChanged.AddListener(SetVolume);
     }
 
-    public void SetVolume(float volume)
+    public static void SetVolume(float volume)
     {
         PlayerPrefs.SetFloat("volume", volume);
         PlayerPrefs.Save();

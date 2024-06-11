@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class  ParallaxController : MonoBehaviour
@@ -15,8 +14,7 @@ public class  ParallaxController : MonoBehaviour
     [Range(0.01f, 0.05f)] public float parallaxSpeed;
     
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
-
-    // Start is called before the first frame update
+    
     private void Start()
     {
         if (Camera.main == null) return;
