@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private int _currentLevel = 1;
 
     private HealthManager _healthManager;
+    private PlayerMovement _playerMovement;
     public int CurrentLevel
     {
         get => _currentLevel;
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleFinishingLevel()
     {
+        _playerMovement.ResetParams();
         IsPaused = true;
         winMusic.Play();
         levelCompleteScreen.SetActive(true);
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleDeath()
     {
-        player.GetComponent<PlayerMovement>().ResetParams();
+        _playerMovement.ResetParams();
         IsPaused = true;
         loseSound.Play();
         gameOverScreen.SetActive(true);
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        _playerMovement = player.GetComponent<PlayerMovement>();
         _healthManager = healthContainer.GetComponent<HealthManager>();
         CurrentLevel = PlayerPrefs.GetInt("ChosenLevel");
         if (Instance == null)

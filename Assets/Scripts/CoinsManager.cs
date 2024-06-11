@@ -49,7 +49,7 @@ public class CoinsManager : MonoBehaviour
 
     private void UpdateTotalCoinsOnLevel()
     {
-        var levelNode = GameObject.Find("CoinsOnLvl" + _currentLevel);
+        var levelNode = GameObject.Find("CoinsOnLvl" + (_currentLevel + 1));
         _totalCoinsOnLevel = levelNode ? levelNode.transform.childCount : 0;
         _coins = 0;
     }
