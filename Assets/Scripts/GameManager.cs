@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject levelCompleteScreen;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject healthContainer;
+
+    [SerializeField] private AudioClip[] levelsClips;
 //285 -4 0
     private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(465f, -0.34f, 0) };
 
@@ -29,12 +31,19 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentLevel = value;
+            changeCurrentLevelMusic(value);
             resumeSound.Play();
             PlayerPrefs.SetInt("ChosenLevel", value);
             if (CoinsManager.Instance is not null)
                 CoinsManager.Instance.SetLevel(value);
             player.transform.position = _lvlsPos[value];
         }
+    }
+
+    private void changeCurrentLevelMusic(int level)
+    {
+        backgroundMusic.clip = levelsClips[level];
+        backgroundMusic.Play();
     }
 
     private void Update()

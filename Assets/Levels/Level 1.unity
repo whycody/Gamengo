@@ -1051,6 +1051,10 @@ MonoBehaviour:
   levelCompleteScreen: {fileID: 2147134457}
   player: {fileID: 1908676041}
   healthContainer: {fileID: 874864638}
+  levelsClips:
+  - {fileID: 8300000, guid: bea93a38b71b64b598109b3a3b1a0048, type: 3}
+  - {fileID: 8300000, guid: 5b1ed8fbe89154eaf96723b6e5f0aad3, type: 3}
+  - {fileID: 8300000, guid: eb7f10105313640a18ce7926041a4d76, type: 3}
 --- !u!1 &288803024
 GameObject:
   m_ObjectHideFlags: 0
