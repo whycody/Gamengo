@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private bool[] _completedLvl = new[] { false, false, false };
 
     public bool IsPaused { get; set; }
+    public bool IsSlowed { get; set; }
     private int _currentLevel = 1;
 
     private HealthManager _healthManager;
@@ -120,6 +121,18 @@ public class GameManager : MonoBehaviour
     {
         for (var i = 0; i < levelsBackgrounds.Length; i++)
             levelsBackgrounds[i].SetActive(i == lvl);
-        
+    }
+
+    public void SlowPlayer(float duration)
+    {
+        if (!IsSlowed)
+            StartCoroutine(SlowPlayerCoroutine(duration));
+    }
+
+    private IEnumerator SlowPlayerCoroutine(float duration)
+    {
+        IsSlowed = true;
+        yield return new WaitForSeconds(duration);
+        IsSlowed = false;
     }
 }

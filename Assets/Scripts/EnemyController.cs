@@ -6,7 +6,6 @@ public class EnemyController : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float fireRate = 1f;
-    [SerializeField] public bool horizontal;
 
     private Transform _player;
     private float _nextFireTime;

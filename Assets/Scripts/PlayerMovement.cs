@@ -8,9 +8,10 @@ using Image = UnityEngine.UI.Image;
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
-    
+
     [SerializeField] private ParticleSystem dust;
-    [SerializeField] private float speed = 8;
+    [SerializeField] public float speed = 8;
+    [SerializeField] public float slowness = 0.3f;
     [SerializeField] private float jumpSpeed = 8;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
@@ -103,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
         #region Movement handling
 
         _body.velocity = new Vector2(horizontalSpeed * speed, _body.velocity.y);
+        if (_gameManager.IsSlowed) _body.velocity = new Vector2(_body.velocity.x * slowness, _body.velocity.y);
 
         // turning right and left
         if (horizontalSpeed > 0.01f)
@@ -116,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_downKeys.Any(Input.GetKeyDown) && _anim.GetBool(IdleParam))
             _anim.SetBool(LayingParam, true);
-                
+
         // Setting gravity force on Down Arrow
         _body.gravityScale = _downKeys.Any(Input.GetKey) ? 2 * _defaultGravityScale : _defaultGravityScale;
 
@@ -201,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (staminaBar)
             staminaBar.fillAmount = stamina / maxStamina;
-        
+
     }
 
     private IEnumerator RechargeStamina()
@@ -222,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
         while (!_gameManager.IsPaused)
         {
             yield return new WaitForSeconds(8.0f);
-            if(!_gameManager.IsPaused)
+            if (!_gameManager.IsPaused)
                 _anim.SetTrigger(Meow);
         }
     }

@@ -11,7 +11,7 @@ public class  ParallaxController : MonoBehaviour
     private float[] _backSpeed;
     private float _farthestBack;
     
-    [Range(0.01f, 0.05f)] public float parallaxSpeed;
+    [Range(0.01f, 0.06f)] public float parallaxSpeed;
     
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
     

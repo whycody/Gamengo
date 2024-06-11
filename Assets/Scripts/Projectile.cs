@@ -3,7 +3,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private const float Speed = 8f;
-    public float lifeTime = 4f;
+    public float lifeTime = 3f;
+    public bool slowing = false;
+    public float slowSpeed = 4f;
+    public float slowDuration = 3f;
     private Transform _player;
     private Vector2 _direction;
     private GameObject _gameManagerObject;
@@ -31,6 +34,7 @@ public class Projectile : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
         _gameManager.HandleAttack();
+        if (slowing) _gameManager.SlowPlayer(slowDuration);
         Destroy(gameObject);
     }
 }
