@@ -15,7 +15,6 @@ public class HealthManager : MonoBehaviour
         set
         {
             if (currHp == value) return;
-            print(value);
             currHp = value;
             if (value == 0) _gameManager.HandleDeath();
             UpdateHp();

@@ -15,14 +15,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject healthContainer;
     [SerializeField] private AudioClip[] levelsClips;
+    [SerializeField] private GameObject[] levelsBackgrounds;
 
     private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(520f, -4.3f, 0) };
+    private bool[] _completedLvl = new[] { false, false, false };
 
     public bool IsPaused { get; set; }
     private int _currentLevel = 1;
 
     private HealthManager _healthManager;
     private PlayerMovement _playerMovement;
+
     public int CurrentLevel
     {
         get => _currentLevel;
@@ -35,7 +38,18 @@ public class GameManager : MonoBehaviour
                 CoinsManager.Instance.SetLevel(value);
             player.transform.position = _lvlsPos[value];
             StartCoroutine(ChangeCurrentLevelMusic(value));
+            ChangeCurrentLevelBackground(value);
         }
+    }
+
+    private void Awake()
+    {
+        _playerMovement = player.GetComponent<PlayerMovement>();
+        _healthManager = healthContainer.GetComponent<HealthManager>();
+        CurrentLevel = PlayerPrefs.GetInt("ChosenLevel");
+
+        if (!Instance) Instance = this;
+        else Destroy(gameObject);
     }
 
     private IEnumerator ChangeCurrentLevelMusic(int level)
@@ -51,7 +65,6 @@ public class GameManager : MonoBehaviour
         if (gameOverScreen.activeSelf || levelCompleteScreen.activeSelf) return;
         if (IsPaused) ResumeGame();
         else PauseGame();
-
     }
 
     public void HandleFinishingLevel()
@@ -59,6 +72,7 @@ public class GameManager : MonoBehaviour
         _playerMovement.ResetParams();
         IsPaused = true;
         winMusic.Play();
+        _completedLvl[_currentLevel] = true;
         levelCompleteScreen.SetActive(true);
         backgroundMusic.volume *= 0.1f;
     }
@@ -76,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
         _playerMovement.ResetParams();
         IsPaused = true;
+        _healthManager.Health = 0;
         loseSound.Play();
         gameOverScreen.SetActive(true);
         backgroundMusic.volume *= 0.2f;
@@ -101,13 +116,10 @@ public class GameManager : MonoBehaviour
         pauseScreen.SetActive(false);
     }
 
-    private void Awake()
+    private void ChangeCurrentLevelBackground(int lvl)
     {
-        _playerMovement = player.GetComponent<PlayerMovement>();
-        _healthManager = healthContainer.GetComponent<HealthManager>();
-        CurrentLevel = PlayerPrefs.GetInt("ChosenLevel");
+        for (var i = 0; i < levelsBackgrounds.Length; i++)
+            levelsBackgrounds[i].SetActive(i == lvl);
         
-        if (!Instance) Instance = this;
-        else Destroy(gameObject);
     }
 }
