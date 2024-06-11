@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip[] levelsClips;
     [SerializeField] private GameObject[] levelsBackgrounds;
 
-    private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(520f, -4.3f, 0) };
+    private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(580f, -4.3f, 0) };
     private bool[] _completedLvl = new[] { false, false, false };
 
     public bool IsPaused { get; set; }
