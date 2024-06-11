@@ -8,9 +8,12 @@ public class Projectile : MonoBehaviour
     private Vector2 _direction;
     private GameObject gameManagerObject;
     private GameManager gameManager;
+    private AudioSource attackSound;
 
     public void Awake()
     {
+        attackSound = GameObject.FindGameObjectWithTag("AttackSound").GetComponent<AudioSource>();
+        attackSound.Play();
         gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
         gameManager = gameManagerObject.GetComponent<GameManager>();
         if (!GameObject.FindGameObjectWithTag("Player")) return;

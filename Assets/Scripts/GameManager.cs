@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource winMusic;
     [SerializeField] private AudioSource loseSound;
     [SerializeField] private AudioSource resumeSound;
+    [SerializeField] private AudioSource hurtSound;
 
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameOverScreen;
@@ -31,17 +33,18 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentLevel = value;
-            changeCurrentLevelMusic(value);
             resumeSound.Play();
             PlayerPrefs.SetInt("ChosenLevel", value);
             if (CoinsManager.Instance is not null)
                 CoinsManager.Instance.SetLevel(value);
             player.transform.position = _lvlsPos[value];
+            StartCoroutine(changeCurrentLevelMusic(value));
         }
     }
 
-    private void changeCurrentLevelMusic(int level)
+    private IEnumerator changeCurrentLevelMusic(int level)
     {
+        yield return new WaitForSeconds(0.75f);
         backgroundMusic.clip = levelsClips[level];
         backgroundMusic.Play();
     }
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleAttack()
     {
+        if (_healthManager.Health > 0) hurtSound.Play();
         _healthManager.Health--;
     }
 
