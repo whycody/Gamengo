@@ -223,10 +223,11 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator MeowRoutine()
     {
-        while (true)
+        while (!_gameManager.IsPaused)
         {
             yield return new WaitForSeconds(8.0f);
-            _anim.SetTrigger(Meow);
+            if(!_gameManager.IsPaused)
+                _anim.SetTrigger(Meow);
         }
     }
 

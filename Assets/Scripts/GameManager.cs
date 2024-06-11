@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject levelCompleteScreen;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject healthContainer;
-
-    private readonly Vector3[] _lvlsPos = { new(97f, -2.78f, 4.55f), new(285, -4, 0), new(320, -4, 0) };
+//285 -4 0
+    private readonly Vector3[] _lvlsPos = { new(-6.5f, -2.4f, 0), new(285f, -4f, 0), new(465f, -0.34f, 0) };
 
     public bool IsStarted { get; set; } = false;
     public bool IsPaused { get; set; } = false;
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
         CurrentLevel++;
         backgroundMusic.volume *= 10f;
         levelCompleteScreen.SetActive(false);
+        _healthManager.Health = _healthManager.maxHp;
     }
 
     public void HandleDeath()
