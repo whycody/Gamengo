@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompleteScreen;
+    [SerializeField] private GameObject endGameScreen;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject healthContainer;
     [SerializeField] private AudioClip[] levelsClips;
@@ -79,7 +80,9 @@ public class GameManager : MonoBehaviour
         IsPaused = true;
         winMusic.Play();
         _completedLvl[_currentLevel] = true;
-        levelCompleteScreen.SetActive(true);
+        if (CurrentLevel != _lvlsPos.Length - 1)
+            levelCompleteScreen.SetActive(true);
+        else endGameScreen.SetActive(true);
         backgroundMusic.volume *= 0.1f;
     }
 
