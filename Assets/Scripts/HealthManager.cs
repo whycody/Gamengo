@@ -14,7 +14,7 @@ public class HealthManager : MonoBehaviour
         get => currHp;
         set
         {
-            if (currHp == value) return;
+            if (currHp == value || value > maxHp) return;
             currHp = value;
             if (value == 0) _gameManager.HandleDeath();
             UpdateHp();

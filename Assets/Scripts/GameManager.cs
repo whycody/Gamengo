@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
         else PauseGame();
     }
 
+    public void HandleAddingHp()
+    {
+        _healthManager.Health++;
+    }
+
     public void HandleFinishingLevel()
     {
         _playerMovement.ResetParams();
