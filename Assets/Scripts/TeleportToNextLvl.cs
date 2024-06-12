@@ -3,7 +3,6 @@ using UnityEngine;
 public class TeleportToNextLvl : MonoBehaviour
 {
     [SerializeField] private GameObject gameManagerObject;
-    [SerializeField] private int destinationLevel;
     private GameManager _gameManager;
 
     private void Awake()

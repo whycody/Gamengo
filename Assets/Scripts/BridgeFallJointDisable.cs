@@ -14,7 +14,7 @@ public class BridgeFallJointDisable : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) return;
         if (_hingeJoint is null) return;
-        StartCoroutine(DisableHingeJointAfterDelay(0.2f));
+        StartCoroutine(DisableHingeJointAfterDelay(0.1f));
     }
 
     private IEnumerator DisableHingeJointAfterDelay(float delay)

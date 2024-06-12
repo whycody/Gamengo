@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleAttack()
     {
+        if (IsPaused) return;
         if (_healthManager.Health > 0) hurtSound.Play();
         _healthManager.Health--;
     }
