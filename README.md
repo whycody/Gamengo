@@ -1,6 +1,6 @@
 ## Gamengo - README
 
-![GitHub User's stars](https://img.shields.io/github/stars/whycody) ![Static Badge](https://img.shields.io/badge/version-1.0.0-green?style=flat)     ![GitHub top language](https://img.shields.io/github/languages/top/whycody/Gamengo) ![GitHub repo size](https://img.shields.io/github/repo-size/whycody/Gamengo)
+![GitHub Repo stars](https://img.shields.io/github/stars/whycody/Gamengo) ![Static Badge](https://img.shields.io/badge/version-1.0.0-green?style=flat)     ![GitHub top language](https://img.shields.io/github/languages/top/whycody/Gamengo) ![GitHub repo size](https://img.shields.io/github/repo-size/whycody/Gamengo)
 
 ![GitHub Created At](https://img.shields.io/github/created-at/whycody/Gamengo)  ![GitHub Release Date](https://img.shields.io/github/release-date/whycody/Gamengo)
 
