@@ -5,12 +5,10 @@
 ![GitHub Created At](https://img.shields.io/github/created-at/whycody/Gamengo)  ![GitHub Release Date](https://img.shields.io/github/release-date/whycody/Gamengo)
 
 
-
-
-
-
 ### Overview
 **Gamengo** is a 2D platformer game where players control Mruczek, a friendly cat navigating through various obstacles and enemies to reach the end of each level. This project showcases the combined effort of Oktawian Kausz and Kamil Marszałek, employing advanced game development techniques with intuitive gameplay and high-quality audio-visuals.
+
+<img src="https://github.com/whycody/Gamengo/assets/108593228/d41cefec-e725-4a9e-aef5-3f43d4a7448e" alt="Game Screenshot" width="70%">
 
 ### Table of Contents
 1. [Game Description](#game-description)
